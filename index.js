@@ -19,18 +19,18 @@ const {
 sequelize.sync();
 app.use(express.json());
 
-app.get("/", usersControllers.getusers);
-app.post("/", validatorUsers, runValidator, usersControllers.createusers);
-app.put("/", usersControllers.updateusers);
-app.delete("/", usersControllers.deleteusers);
+app.get("/users", usersControllers.getusers);
+app.post("/users", validatorUsers, runValidator, usersControllers.createusers);
+app.put("/users", usersControllers.updateusers);
+app.delete("/users", usersControllers.deleteusers);
 
 app.get("/books", booksControllers.getbooks);
 app.post("/books", validatorBooks, runValidatorbooks, booksControllers.createbooks);
 app.put("/books", booksControllers.updatebooks);
 app.delete("/books", booksControllers.deletebooks);
 
-//app.post("/transactions", ordersControllers.createOrders);
-app.get("/transactions", ordersControllers.getOrders);
+app.post("/transactions", ordersControllers.createOrders);
+app.get("/transactions/users", usersControllers.getusersTrans);
 
 app.listen(port, () => {
   console.log(`port yg berjalan ${port}`);

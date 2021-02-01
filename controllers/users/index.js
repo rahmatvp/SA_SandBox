@@ -1,12 +1,9 @@
 const {success, failed} = require("../../config/response");
-const {users,orders,books} = require("../../models");
+const {users,orders,books,type_books} = require("../../models");
 
 exports.getusers = async (req, res) => {  
     try {
-     // const data = await users.findAll();        
-       const data = await users.findAll(
-         {include : {model : orders, include : {model : books}}}
-        );        
+      const data = await users.findAll();              
       return res.json(
         success({ message: "Data berhasil", data }));
     } catch (error) {
@@ -15,6 +12,35 @@ exports.getusers = async (req, res) => {
       )
     }
   };
+
+
+  exports.getusersTrans = async (req, res) => {  
+    try {
+      const data = await users.findAll({
+        attributes : ['name','phone'],
+        include: {
+          model : orders,
+          attributes : ['qty'],
+          include : {
+             model : books,
+             attributes : ['name'],
+             include :{
+               model : type_books,
+               attributes : ['name']
+             }
+          }
+        }
+      });       
+     // const data ='';       
+      return res.json(
+        success({ message: "Data berhasil", data }));
+    } catch (error) {
+      return res.json(
+        failed({message: "terjadi Kesalahan Sistem", data: error})
+      )
+    }
+  };
+
 
   exports.createusers = async (req, res) => {  
     

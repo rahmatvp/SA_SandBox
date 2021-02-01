@@ -1,11 +1,12 @@
 const { Result } = require("express-validator");
 const { success, failed } = require("../../config/response");
-const { orders,users,books } = require("../../models");
+const { orders } = require("../../models");
 
-exports.getOrders = async (req, res) => {
- // console.log
+exports.createOrders = async (req, res) => {
+
   try {
-    const data = await orders.bulkCreate(res.body);
+
+    const data = await orders.bulkCreate(req.body.orders);
     return res.json(
       success({
         message : "Data Berhasil Ditemukan",
